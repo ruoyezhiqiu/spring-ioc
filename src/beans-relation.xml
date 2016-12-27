@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="car" class="com.wushengde.spring.autowire.Car" p:brand="audi" p:price="300000"></bean>
+	<bean id="address" class="com.wushengde.spring.autowire.Address" p:city="BeiJing" p:street="WuDaoKou" abstract="true"></bean>
+	<!-- bean的继承：使用bean的parent属性指定继承哪个bean的配置：子bean可以覆盖父bean的配置 如下城市的覆盖 -->
+	<!-- bean的继承中：父bean可以被实例化，也可以配置成一个模板，配置成bean模板时是不能被实例化的，可以使用bean的abstract属性将bean配置为模板	 -->
+	<!-- 若某一个bean没有指定class属性，则该bean必须是一个抽象的bean，否则会出错！ -->
+	<bean id="address2" p:city="^Beijing^"  p:street="DaZhongShi" parent="address"></bean>
+	
+	<!-- bean之间的依赖关系 -->
+	<!-- 要求在配置person时必须有关联的car,即：Person这个bean 依赖于这个car，当指定了依赖关系时，而在配置beans时没有配置car的bean时将会报错 -->
+	<bean id="person" class="com.wushengde.spring.autowire.Person" p:name="Tom" p:address-ref="address2"  depends-on="car"></bean>
+</beans>

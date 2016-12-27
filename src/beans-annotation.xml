@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 指定springIOC容器扫描的包 -->
+	
+	<!-- base-package:表示扫描该包及其子包中的bean -->
+	<!-- <context:component-scan base-package="com.wushengde.spring.annotation"
+	></context:component-scan> -->
+	
+	<!-- resource-pattern：表示只扫描该包及子包中的bean -->
+	<!-- <context:component-scan base-package="com.wushengde.spring.annotation"
+	resource-pattern="repository/*.class"
+	></context:component-scan> --> 
+	
+	<!-- 
+		context:exclude-filter 与 context:include-filter 子节点中的type常用有一下两种：
+		1. type="annotation" :表示指定的是表达式
+		2. type="assignable" :表示指定的是类的全命名
+	-->
+	
+	
+	<!-- context:exclude-filter子节点表示：context:component-scan的子节点，表示排除哪些指定表达式的组件 -->
+	<!-- <context:component-scan base-package="com.wushengde.spring.annotation">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+	</context:component-scan> -->
+	
+	<!-- context:include-filter子节点表示：只包含该表达式的组件，需要与 use-default-filters属性结合使用，即设置该属性的值为：false方可生效-->
+	<!-- <context:component-scan base-package="com.wushengde.spring.annotation" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+	</context:component-scan> -->
+	
+	
+	<!-- <context:component-scan base-package="com.wushengde.spring.annotation">
+		<context:exclude-filter type="assignable" expression="com.wushengde.spring.annotation.repository.UserRepository"/>
+	</context:component-scan> -->
+	
+	<!-- 此处一样需要跟use-default-filters属性结合使用，表示只包含的意思，目前未使用！！！ -->
+	<context:component-scan base-package="com.wushengde.spring.annotation">
+		<context:include-filter type="annotation" expression="com.wushengde.spring.annotation.repository.UserRepository"/>
+	</context:component-scan>
+	
+</beans>

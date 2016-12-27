@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+<!-- 
+	配置bean
+	class: bean的全类名，通过属性注入值，需要bean中有无参的构造函数。
+	id：标识容器中的bean，id必须是唯一的
+ -->
+<bean id="helloWorld" class="com.wushengde.spring.HelloWorld">
+	<property name="name2" value="郭嘉"></property>
+</bean>
+<!-- 如果注入的属性值中包含了特殊符号可以使用<![CDATA[]]>包裹起来 -->
+<bean id="car" class="com.wushengde.spring.Car">
+	<constructor-arg value="Audi" index="0"></constructor-arg>
+	<constructor-arg index="1">
+		<value><![CDATA[<shanghai^>]]></value>
+	</constructor-arg>
+	<constructor-arg value="300000" index="2"></constructor-arg>
+</bean>
+<bean id="car2" class="com.wushengde.spring.Car">
+<constructor-arg value="BaoMa" index="0"></constructor-arg>
+	<constructor-arg index="1">
+		<value><![CDATA[<beijing^>]]></value>
+	</constructor-arg>
+	<constructor-arg value="300000" index="2"></constructor-arg>
+</bean>
+<bean id="person" class="com.wushengde.spring.Person">
+	<property name="name" value="tom"></property>
+	<property name="age" value="24"></property>
+	<!-- 可以使用property的ref属性建立bean之间的引用关系 -->
+	<!-- <property name="car" ref="car"></property> -->
+	<!-- 也可以在内部创建一个bean称为内部bean如下所示，内部bean不能被外部bean引用 -->
+	<property name="car">
+	<bean class="com.wushengde.spring.Car">
+		<constructor-arg value="Audi" index="0"></constructor-arg>
+	<constructor-arg index="1">
+		<value><![CDATA[<shanghai^>]]></value>
+	</constructor-arg>
+	<constructor-arg value="300000" index="2"></constructor-arg>
+	</bean>
+	</property>
+</bean>
+<bean id="person2" class="com.wushengde.spring.Person">
+	<constructor-arg value="jack"></constructor-arg>
+	<constructor-arg value="25"></constructor-arg>
+	<!-- <constructor-arg ref="car"></constructor-arg> -->
+	<!-- 测试null值  null值的专业写法：<null/> -->
+	<!-- <constructor-arg><null/></constructor-arg> -->
+	<!-- 测试spring的级联属性赋值 -->
+	<constructor-arg ref="car"></constructor-arg>
+	<!-- 此处便是为级联属性赋值 -->
+	<property name="car.maxSpeed" value="240"></property>
+</bean>
+
+<!-- 测试如何配置集合属性，以List为例 -->
+<bean id="person3" class="com.wushengde.spring.collection.Person">
+	<property name="name" value="tom"></property>
+	<property name="age" value="27"></property>
+	<property name="cars">
+		<list>
+			<ref bean="car"/>
+			<ref bean="car2"/>
+		</list>
+	</property>
+</bean>
+
+<!-- 配置map的属性值 -->
+<bean id="newPerson" class="com.wushengde.spring.collection.NewPerson">
+	<property name="name" value="Rose"></property>
+	<property name="age" value="30"></property>
+	<property name="cars">
+	<!-- 使用map节点以及map的entry子节点配置Map类型的成员变量 -->
+		<map>
+			<entry key="AA" value-ref="car"></entry>
+			<entry key="BB" value-ref="car2"></entry>
+		</map>
+	</property>
+</bean>
+
+<!-- 配置Properties 属性值 -->
+<bean id="dataSource" class="com.wushengde.spring.collection.DataSource">
+	<property name="properties">
+	<!-- 使用props 与prop子节点 为properties属性赋值 -->
+		<props>
+			<prop key="user">root</prop>
+			<prop key="password">123456</prop>
+			<prop key="jdbcUrl">jdbc:mysql:///mybatis</prop>
+			<prop key="driverClass">com.mysql.jdbc.Driver</prop>
+		</props>
+	</property>
+</bean>
+
+
+<!-- 配置独立的集合bean，以便其他的bean引用:注 需要导入util命名空间 -->
+<util:list id="cars">
+	<ref bean="car"/>
+	<ref bean="car2"/>
+</util:list>
+
+<!-- 测试以上的util配置 -->
+<bean id="person4" class="com.wushengde.spring.collection.Person">
+	<property name="name" value="tomcar"></property>
+	<property name="age" value="25"></property>
+	<property name="cars" ref="cars"></property>
+</bean>
+
+<!-- 通过 p 命名空间 为 bean的属性赋值：注 需要先导入 P 命名空间:相对于传统的配置方式更加的简洁 -->
+<bean id="person5" class="com.wushengde.spring.collection.Person" p:age="35" p:name="Queen" p:cars-ref="cars"></bean>
+
+</beans>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="address" class="com.wushengde.spring.spel.Address">
+	<!-- 使用spel 为属性赋一个字面值 -->
+		<property name="city" value="#{'BeiJing'}"></property>
+		<property name="street">
+			<value><![CDATA[<#WuDaoKou#>]]></value>
+		</property>
+	</bean>
+	
+	<bean id="car" class="com.wushengde.spring.spel.Car">
+		<property name="brand" value="audi"></property>
+		<property name="price" value="6000000"></property>
+		<!-- 引用类的静态属性 方式：#{T(类的全命名).该类的静态属性} -->
+		<!-- 此处将车的轮胎的半径设置为：40cm -->
+		<property name="tyrePerimeter" value="#{T(java.lang.Math).PI * 2*40}"></property>
+	</bean>
+	
+	<bean id="person" class="com.wushengde.spring.spel.Person">
+		<property name="name" value="tomjack"></property>
+		<!-- 使用spel引用其他的bean -->
+		<property name="car" value="#{car}"></property>
+		<!-- 使用spel引用其他bean的属性 -->
+		<property name="city" value="#{address.city}"></property>
+		<!-- 使用spel中的运算符：动态赋值 -->
+		<property name="info" value="#{car.price>300000 ? '金领':'白领'}"></property>
+	</bean>
+</beans>

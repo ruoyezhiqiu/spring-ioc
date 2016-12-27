@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<bean id="address" class="com.wushengde.spring.autowire.Address" p:city="BeiJing" p:street="HuiLongGuan"></bean>
+<bean id="address2" class="com.wushengde.spring.autowire.Address" p:city="ChengDu" p:street="JianSheLu"></bean>
+<bean id="car" class="com.wushengde.spring.autowire.Car" p:brand="Audi" p:price="300000"></bean>
+<!-- autowire属性:自动装配 ：（byName:根据名字自动装配，需注意bean的id必须跟实例的set方法名一致 否则会出错； -->
+<!-- autowire属性中：byType 根据bean的类型和当前bean的属性的类型进行自动装配:注  若IOC容器中有两个及以上的相同类型的bean，则根据类型自动装配会出错-->
+<bean id="person" class="com.wushengde.spring.autowire.Person" p:name="hellokit" autowire="byName"></bean>
+
+</beans>

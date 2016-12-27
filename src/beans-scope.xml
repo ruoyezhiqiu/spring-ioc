@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+ <!-- 关于bean的作用域 -->
+ 	<!-- bean的作用域可以使用bean的scope属性进行配置，默认的scope为：singleton 即：单例的 在容器的整个生命周期内就产生这一个bean。-->
+ 	<!-- 常用的bean的作用域有：singleton(默认的)与prototype 即：原型的 ，每次向容器获取bean的时候都会产生一个新的bean-->
+	<bean id="car" class="com.wushengde.spring.autowire.Car" scope="prototype">
+	<property name="brand" value="audi"></property>
+	<property name="price" value="300000"></property>
+	</bean>
+</beans>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 使用bean的init-method与destroy-method属性来确定bean的初始化与销毁方法 -->
+	<bean id="car" class="com.wushengde.spring.cycle.Car" init-method="init2" destroy-method="destroy">
+		<property name="brand" value="audi"></property>
+	</bean>
+	
+	<!-- bean 的后置处理器 -->
+	<!-- 
+		bean的后置处理的创建：实现：BeanPostProcessor 接口 
+		并实现一下两个方法：  postProcessBeforeInitialization 在bean初始化之前调用 
+		与 
+		postProcessAfterInitialization 在bean初始化之后调用
+		
+	 -->
+	 	<!-- 配置bean的后置处理器 ：不需要配置id，IOC容器自动识别 BeanPostProcessor	-->
+	<bean class="com.wushengde.spring.cycle.MyBeanPostProcessor"></bean>
+</beans>
